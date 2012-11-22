@@ -55,10 +55,14 @@ foreach( OC_Files::getdirectorycontent( $dir ) as $i ) {
 		else {
 			$i['extension']='';
 		}
+		$i['route'] = OC::getRouter()->generate('download', array('dir'=>$i['directory'], 'files' => $i['name']));
+	} else {
+		$i['route'] = OC::getRouter()->generate('files_browse', array('dir'=>$i['directory'] . $i['name']));
 	}
 	if($i['directory']=='/') {
 		$i['directory']='';
 	}
+	
 	$files[] = $i;
 }
 
@@ -68,7 +72,8 @@ $pathtohere = '';
 foreach( explode( '/', $dir ) as $i ) {
 	if( $i != '' ) {
 		$pathtohere .= '/'.$i;
-		$breadcrumb[] = array( 'dir' => $pathtohere, 'name' => $i );
+		$route = OC::getRouter()->generate('files_browse', array('dir'=>$pathtohere));
+		$breadcrumb[] = array( 'dir' => $pathtohere, 'name' => $i, 'route' => $route );
 	}
 }
 

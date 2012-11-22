@@ -21,7 +21,11 @@
 			<tr data-id="<?php echo $file['id']; ?>" data-file="<?php echo $name;?>" data-type="<?php echo ($file['type'] == 'dir')?'dir':'file'?>" data-mime="<?php echo $file['mimetype']?>" data-size='<?php echo $file['size'];?>' data-permissions='<?php echo $file['permissions']; ?>'>
 				<td class="filename svg" style="background-image:url(<?php if($file['type'] == 'dir') echo OCP\mimetype_icon('dir'); else echo OCP\mimetype_icon($file['mimetype']); ?>)">
 					<?php if(!isset($_['readonly']) || !$_['readonly']) { ?><input type="checkbox" /><?php } ?>
-					<a class="name" href="<?php if($file['type'] == 'dir') echo $_['baseURL'].$directory.'/'.$name; else echo $_['downloadURL'].$directory.'/'.$name; ?>" title="">
+					<?php if (isset($file['route'])): ?>
+						<a class="name" href="<?php echo $file['route']; ?>" title="">
+					<?php else: ?> 
+						<a class="name" href="<?php if($file['type'] == 'dir') echo $_['baseURL'].$directory.'/'.$name; else echo $_['downloadURL'].$directory.'/'.$name; ?>" title="">
+					<?php endif;?>
 					<span class="nametext">
 						<?php if($file['type'] == 'dir'):?>
 							<?php echo htmlspecialchars($file['name']);?>

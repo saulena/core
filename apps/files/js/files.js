@@ -40,10 +40,6 @@ Files={
 	}
 };
 $(document).ready(function() {
-	$('#fileList tr').each(function(){
-		//little hack to set unescape filenames in attribute
-		$(this).attr('data-file',decodeURIComponent($(this).attr('data-file')));
-	});
 
 	if($('tr[data-file]').length==0){
 		$('.file_upload_filename').addClass('highlight');
@@ -186,7 +182,7 @@ $(document).ready(function() {
 		if ( (downloadURL = document.getElementById("downloadURL")) ) {
 			window.location=downloadURL.value+"&download&files="+files;
 		} else {
-			window.location=OC.filePath('files', 'ajax', 'download.php') + '?'+ $.param({ dir: dir, files: files });
+			window.location = OC.Router.generate('download', {files: files, dir: dir} );
 		}
 		return false;
 	});
